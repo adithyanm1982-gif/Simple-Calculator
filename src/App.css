@@ -1,0 +1,193 @@
+.calc {
+  --amber: #ff9d4d;
+  --amber-bright: #ffb977;
+  --body: #2a251e;
+  --body-dark: #201c17;
+  --key: #3c362c;
+  --key-light: #4a4237;
+  --stone: #56503f;
+
+  width: min(360px, 100%);
+  padding: 20px 18px 24px;
+  border-radius: 26px;
+  background: linear-gradient(155deg, var(--body) 0%, var(--body-dark) 100%);
+  box-shadow:
+    0 30px 60px -20px rgba(0, 0, 0, 0.6),
+    0 0 0 1px rgba(255, 255, 255, 0.04) inset,
+    0 1px 0 rgba(255, 255, 255, 0.06) inset;
+}
+
+.calc__vent {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 2px 6px 14px;
+}
+
+.calc__led {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #4a3624;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.4) inset;
+  transition: background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.calc__led[data-on='true'] {
+  background: var(--amber);
+  box-shadow: 0 0 8px 2px rgba(255, 157, 77, 0.7);
+}
+
+.calc__brand {
+  font-family: 'Manrope', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: #7a7264;
+}
+
+.calc__display {
+  position: relative;
+  overflow: hidden;
+  border-radius: 14px;
+  padding: 22px 18px 16px;
+  margin-bottom: 18px;
+  background: linear-gradient(180deg, #1a0f08 0%, #100a06 100%);
+  box-shadow:
+    0 2px 6px rgba(0, 0, 0, 0.5) inset,
+    0 0 0 1px rgba(0, 0, 0, 0.5),
+    0 1px 0 rgba(255, 255, 255, 0.03);
+  text-align: right;
+}
+
+.calc__expression {
+  font-family: 'Space Mono', monospace;
+  font-size: 13px;
+  min-height: 16px;
+  color: #8a5c38;
+  letter-spacing: 0.02em;
+  margin-bottom: 6px;
+}
+
+.calc__value {
+  font-family: 'Space Mono', monospace;
+  font-size: clamp(32px, 9vw, 40px);
+  font-weight: 700;
+  color: var(--amber-bright);
+  text-shadow: 0 0 14px rgba(255, 157, 77, 0.55), 0 0 2px rgba(255, 185, 119, 0.8);
+  line-height: 1.1;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+.calc__value[data-error='true'] {
+  color: #ff6b6b;
+  text-shadow: 0 0 14px rgba(255, 107, 107, 0.55);
+  font-size: 26px;
+}
+
+.calc__scanline {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.025) 0px,
+    rgba(255, 255, 255, 0.025) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  mix-blend-mode: overlay;
+}
+
+.calc__pad {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+.key {
+  font-family: 'Manrope', sans-serif;
+  font-size: 17px;
+  font-weight: 600;
+  color: #ece6da;
+  padding: 16px 0;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(180deg, var(--key-light) 0%, var(--key) 100%);
+  box-shadow:
+    0 3px 0 rgba(0, 0, 0, 0.35),
+    0 4px 8px rgba(0, 0, 0, 0.3),
+    0 1px 0 rgba(255, 255, 255, 0.08) inset;
+  cursor: pointer;
+  transition: transform 0.08s ease, box-shadow 0.08s ease;
+}
+
+.key:hover {
+  background: linear-gradient(180deg, #524a3d 0%, #423b30 100%);
+}
+
+.key:active {
+  transform: translateY(3px);
+  box-shadow:
+    0 0 0 rgba(0, 0, 0, 0.35),
+    0 1px 2px rgba(0, 0, 0, 0.3),
+    0 1px 0 rgba(255, 255, 255, 0.05) inset;
+}
+
+.key:focus-visible {
+  outline: 2px solid var(--amber);
+  outline-offset: 2px;
+}
+
+.key--func {
+  color: #d8cfbf;
+  background: linear-gradient(180deg, var(--stone) 0%, #453f32 100%);
+  font-size: 15px;
+}
+
+.key--op {
+  color: var(--amber-bright);
+  background: linear-gradient(180deg, #5a3d24 0%, #4a3018 100%);
+  font-size: 19px;
+}
+
+.key--active {
+  background: linear-gradient(180deg, var(--amber) 0%, #cc7530 100%);
+  color: #241205;
+  box-shadow:
+    0 3px 0 rgba(0, 0, 0, 0.35),
+    0 0 12px 2px rgba(255, 157, 77, 0.5),
+    0 1px 0 rgba(255, 255, 255, 0.15) inset;
+}
+
+.key--equals {
+  background: linear-gradient(180deg, #ff9d4d 0%, #e07a2e 100%);
+  color: #241205;
+  box-shadow:
+    0 3px 0 #a3551a,
+    0 4px 10px rgba(224, 122, 46, 0.4),
+    0 1px 0 rgba(255, 255, 255, 0.25) inset;
+}
+
+.key--equals:hover {
+  background: linear-gradient(180deg, #ffab66 0%, #e6853c 100%);
+}
+
+.key--equals:active {
+  transform: translateY(3px);
+  box-shadow:
+    0 0 0 #a3551a,
+    0 1px 3px rgba(224, 122, 46, 0.3),
+    0 1px 0 rgba(255, 255, 255, 0.15) inset;
+}
+
+.key--wide {
+  grid-column: span 2;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .key {
+    transition: none;
+  }
+}
